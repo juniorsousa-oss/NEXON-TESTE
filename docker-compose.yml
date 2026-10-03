@@ -2,6 +2,10 @@ services:
   web:
     image: nginx:alpine
     restart: unless-stopped
+    command: >
+      /bin/sh -c "wget -q -O /usr/share/nginx/html/index.html
+      https://raw.githubusercontent.com/juniorsousa-oss/NEXON-TESTE/main/index.html
+      && exec nginx -g 'daemon off;'"
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik-proxy
