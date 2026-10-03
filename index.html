@@ -1,179 +1,251 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nexon Labs • Ambiente de Teste</title>
-  <style>
-    :root{
-      --bg:#050814;
-      --panel:#0b1020;
-      --line:#1b2645;
-      --text:#eaf0ff;
-      --muted:#8fa0c7;
-      --accent:#7c3aed;
-      --accent2:#22d3ee;
-      --danger:#ff4d6d;
-      --ok:#2dd4bf;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      min-height:100vh;
-      display:grid;
-      place-items:center;
-      padding:24px;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(124,58,237,.18), transparent 34%),
-        radial-gradient(circle at 80% 75%, rgba(34,211,238,.12), transparent 30%),
-        var(--bg);
-      color:var(--text);
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-    }
-    .shell{
-      width:min(920px,100%);
-      border:1px solid rgba(143,160,199,.22);
-      border-radius:22px;
-      overflow:hidden;
-      background:rgba(8,12,26,.90);
-      box-shadow:0 30px 90px rgba(0,0,0,.45);
-      backdrop-filter:blur(14px);
-    }
-    .top{
-      height:54px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:0 18px;
-      border-bottom:1px solid rgba(143,160,199,.14);
-      background:rgba(255,255,255,.02);
-    }
-    .dot{width:11px;height:11px;border-radius:50%;background:#ff5f57}
-    .dot:nth-child(2){background:#febc2e}
-    .dot:nth-child(3){background:#28c840}
-    .brand{margin-left:auto;color:var(--muted);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
-    .content{padding:32px}
-    .eyebrow{color:var(--accent2);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
-    h1{font-size:clamp(28px,4vw,46px);line-height:1.04;margin:0 0 14px}
-    .sub{color:var(--muted);font-size:16px;margin-bottom:28px}
-    .terminal{
-      min-height:250px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:20px;
-      background:#050914;
-      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-      font-size:14px;
-      line-height:1.7;
-      overflow:hidden;
-    }
-    .line{opacity:0;transform:translateY(5px);animation:show .25s forwards}
-    .line::before{content:"> ";color:var(--accent2)}
-    .warn{color:#ffd166}
-    .danger{color:var(--danger);font-weight:700}
-    .ok{color:var(--ok);font-weight:700}
-    .bar-wrap{margin-top:24px}
-    .bar-label{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-bottom:8px}
-    .bar{height:10px;border-radius:999px;background:#11182a;overflow:hidden;border:1px solid #1a2540}
-    .fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .35s ease}
-    .reveal{
-      display:none;
-      text-align:center;
-      padding:10px 0 2px;
-    }
-    .reveal.show{display:block;animation:pop .45s ease}
-    .reveal .big{font-size:clamp(36px,7vw,72px);margin:8px 0}
-    .reveal h2{font-size:clamp(24px,4vw,38px);margin:4px 0 10px}
-    .reveal p{color:var(--muted);font-size:16px;max-width:620px;margin:0 auto}
-    .badge{
-      display:inline-flex;
-      margin-top:22px;
-      padding:9px 13px;
-      border-radius:999px;
-      border:1px solid rgba(45,212,191,.32);
-      background:rgba(45,212,191,.08);
-      color:#8ff3df;
-      font-size:13px;
-      font-weight:700;
-    }
-    .footer{margin-top:18px;text-align:center;color:#627098;font-size:12px}
-    @keyframes show{to{opacity:1;transform:none}}
-    @keyframes pop{0%{opacity:0;transform:scale(.96)}100%{opacity:1;transform:scale(1)}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<title>Nexon Labs • Secure Gateway</title>
+<style>
+:root{
+  --bg:#06101c;
+  --bg2:#0a1626;
+  --panel:rgba(13,27,46,.88);
+  --panel2:rgba(8,19,34,.9);
+  --stroke:rgba(151,176,213,.16);
+  --stroke2:rgba(151,176,213,.28);
+  --text:#f5f8ff;
+  --muted:#91a4bf;
+  --soft:#627894;
+  --teal:#14b8a6;
+  --cyan:#22d3ee;
+  --violet:#7c3aed;
+  --warn:#f6c453;
+  --ok:#34d399;
+  --shadow:0 30px 80px rgba(0,0,0,.42);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 12% 18%,rgba(20,184,166,.12),transparent 30%),
+    radial-gradient(circle at 83% 12%,rgba(124,58,237,.12),transparent 28%),
+    linear-gradient(135deg,#050b14 0%,#07111f 48%,#091727 100%);
+  overflow-x:hidden;
+}
+.bg-grid{
+  position:fixed;inset:0;pointer-events:none;opacity:.18;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:42px 42px;
+  mask-image:linear-gradient(to bottom,black,transparent 88%);
+}
+.watermark{position:fixed;right:-70px;bottom:-95px;width:min(42vw,520px);opacity:.025;pointer-events:none;filter:drop-shadow(0 0 30px rgba(20,184,166,.15))}
+.app{position:relative;min-height:100vh;display:flex;flex-direction:column}
+.header{
+  height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,58px);
+  border-bottom:1px solid var(--stroke);background:rgba(5,13,24,.78);backdrop-filter:blur(18px);position:sticky;top:0;z-index:10
+}
+.brand{display:flex;align-items:center;gap:14px}
+.brand img{width:44px;height:44px}
+.brand-copy strong{display:block;font-size:15px;letter-spacing:.11em}
+.brand-copy span{display:block;margin-top:3px;color:var(--muted);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.header-status{display:flex;align-items:center;gap:18px;color:var(--muted);font-size:12px}
+.status-item{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 5px rgba(52,211,153,.08)}
+.main{width:min(1220px,calc(100% - 36px));margin:0 auto;padding:54px 0 44px;flex:1}
+.hero{display:flex;justify-content:space-between;gap:30px;align-items:flex-end;margin-bottom:30px}
+.kicker{display:inline-flex;align-items:center;gap:9px;color:#8ee7dd;font-weight:750;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:15px}
+.kicker:before{content:"";width:28px;height:1px;background:linear-gradient(90deg,var(--teal),transparent)}
+h1{font-size:clamp(34px,5vw,60px);line-height:1.03;letter-spacing:-.045em;margin:0;max-width:780px}
+.hero p{max-width:620px;margin:18px 0 0;color:var(--muted);font-size:16px;line-height:1.7}
+.hero-meta{display:grid;grid-template-columns:repeat(2,minmax(130px,1fr));gap:10px;min-width:290px}
+.meta-chip{border:1px solid var(--stroke);background:rgba(255,255,255,.025);border-radius:14px;padding:12px 14px}
+.meta-chip small{display:block;color:var(--soft);font-size:10px;text-transform:uppercase;letter-spacing:.12em}
+.meta-chip strong{display:block;margin-top:4px;font-size:13px}
+.grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,.75fr);gap:18px}
+.card{border:1px solid var(--stroke);background:linear-gradient(180deg,rgba(15,31,53,.88),rgba(8,19,34,.9));border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.card-head{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--stroke);background:rgba(255,255,255,.018)}
+.card-title{display:flex;align-items:center;gap:10px;font-size:12px;color:#c7d3e7;letter-spacing:.08em;text-transform:uppercase;font-weight:750}
+.traffic{display:flex;gap:7px}.traffic i{width:9px;height:9px;border-radius:50%;background:#ff655f}.traffic i:nth-child(2){background:#f5bf4f}.traffic i:nth-child(3){background:#35c75a}
+.live{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:11px}.pulse{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 1.7s infinite}
+.terminal{min-height:330px;padding:22px 22px 26px;background:linear-gradient(180deg,rgba(2,8,16,.68),rgba(4,11,21,.72));font:13px/1.75 "SFMono-Regular",Consolas,"Liberation Mono",monospace;color:#c9d5e9}
+.log-line{opacity:0;transform:translateY(7px);animation:lineIn .28s forwards;display:grid;grid-template-columns:78px 1fr;gap:12px}
+.log-line+.log-line{margin-top:5px}.ts{color:#526984}.prompt{color:#d7e2f4}.prompt:before{content:"›";display:inline-block;margin-right:10px;color:var(--teal)}
+.log-line.warn .prompt{color:#ffe29b}.log-line.ok .prompt{color:#92f0c3}.log-line.info .prompt{color:#a9c8ff}
+.side-body{padding:18px}
+.session-row{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid rgba(151,176,213,.09)}
+.session-row:last-of-type{border-bottom:0}
+.session-row span{color:var(--muted);font-size:12px}.session-row strong{font-size:12px;text-align:right;font-weight:700}
+.badges{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}
+.badge{border:1px solid rgba(20,184,166,.18);background:rgba(20,184,166,.06);color:#96e7dc;border-radius:12px;padding:11px 12px;font-size:11px;font-weight:750;display:flex;align-items:center;gap:8px}
+.badge b{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.progress-card{margin-top:18px;padding:22px;border:1px solid var(--stroke);border-radius:18px;background:rgba(8,20,35,.66);box-shadow:0 15px 40px rgba(0,0,0,.18)}
+.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}
+.progress-top span{color:var(--muted);font-size:12px}.progress-top strong{font-size:13px}
+.track{height:10px;border-radius:999px;background:#0d1b2c;border:1px solid rgba(151,176,213,.13);overflow:hidden}
+.fill{height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--teal),var(--cyan),var(--violet));box-shadow:0 0 22px rgba(34,211,238,.18);transition:width .55s cubic-bezier(.2,.7,.2,1)}
+.progress-foot{display:flex;justify-content:space-between;gap:16px;margin-top:11px;color:var(--soft);font-size:11px}
+.reveal-wrap{position:fixed;inset:0;background:rgba(2,7,14,.74);backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:22px;z-index:50}
+.reveal-wrap.show{display:flex;animation:fade .35s ease}
+.reveal{width:min(660px,100%);border:1px solid rgba(143,226,215,.22);border-radius:26px;background:linear-gradient(180deg,#0d2031,#07131f);box-shadow:0 40px 120px rgba(0,0,0,.58);padding:38px;text-align:center;position:relative;overflow:hidden}
+.reveal:before{content:"";position:absolute;inset:-80px auto auto 50%;transform:translateX(-50%);width:360px;height:220px;background:radial-gradient(circle,rgba(20,184,166,.22),transparent 68%);pointer-events:none}
+.reveal-logo{width:84px;height:84px;margin:0 auto 22px;position:relative}
+.reveal-label{color:#8ee7dd;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.reveal h2{font-size:clamp(30px,5vw,48px);line-height:1.05;letter-spacing:-.04em;margin:12px 0 14px}
+.reveal p{color:var(--muted);line-height:1.7;margin:0 auto;max-width:540px}
+.reveal-ok{display:inline-flex;align-items:center;gap:9px;margin-top:24px;padding:10px 14px;border-radius:999px;border:1px solid rgba(52,211,153,.22);background:rgba(52,211,153,.075);color:#9af0c8;font-size:12px;font-weight:800}
+.reveal small{display:block;margin-top:18px;color:#5f7590;font-size:11px;line-height:1.6}
+.footer{text-align:center;color:#425975;font-size:11px;margin-top:22px}
+@keyframes lineIn{to{opacity:1;transform:none}}@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(20,184,166,.28)}50%{box-shadow:0 0 0 7px rgba(20,184,166,0)}}@keyframes fade{from{opacity:0}to{opacity:1}}
+@media(max-width:900px){
+  .header{height:auto;min-height:72px;padding:13px 18px;align-items:flex-start}.header-status{display:none}
+  .main{padding-top:34px}.hero{display:block}.hero-meta{margin-top:24px;min-width:0}.grid{grid-template-columns:1fr}
+  .terminal{min-height:290px}.watermark{width:70vw}
+}
+@media(max-width:560px){
+  .main{width:min(100% - 24px,1220px)}.brand-copy strong{font-size:13px}.brand-copy span{font-size:9px}
+  .hero-meta{grid-template-columns:1fr 1fr}.grid{gap:12px}.card{border-radius:16px}.terminal{padding:18px 14px;font-size:11px}
+  .log-line{grid-template-columns:64px 1fr;gap:7px}.badges{grid-template-columns:1fr}.reveal{padding:30px 20px}
+}
+</style>
 </head>
 <body>
-  <main class="shell">
-    <div class="top">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      <span class="brand">Nexon Labs • Secure Gateway</span>
+<div class="bg-grid"></div>
+<img class="watermark" src="/logo.svg" alt="" aria-hidden="true">
+<div class="app">
+<header class="header">
+  <div class="brand">
+    <img src="/logo.svg" alt="Nexon Labs">
+    <div class="brand-copy">
+      <strong>NEXON LABS</strong>
+      <span>Secure Gateway</span>
     </div>
-    <section class="content">
-      <div id="scan">
-        <div class="eyebrow">Ambiente de validação</div>
-        <h1>Verificando acesso ao ambiente Nexon Labs...</h1>
-        <div class="sub">Aguarde enquanto o gateway conclui as verificações de sessão.</div>
+  </div>
+  <div class="header-status">
+    <div class="status-item"><span class="dot"></span>Canal seguro ativo</div>
+    <div class="status-item">Ambiente: Validação</div>
+    <div class="status-item" id="clock">--:--:--</div>
+  </div>
+</header>
 
-        <div class="terminal" id="terminal"></div>
+<main class="main">
+  <section class="hero">
+    <div>
+      <div class="kicker">Controle de acesso</div>
+      <h1>Verificação de acesso em andamento</h1>
+      <p>Estamos validando a sessão e as políticas de acesso do ambiente Nexon Labs. Aguarde alguns instantes enquanto concluímos a análise.</p>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-chip"><small>Gateway</small><strong>NXL-GW-01</strong></div>
+      <div class="meta-chip"><small>Protocolo</small><strong>NXL-TST</strong></div>
+    </div>
+  </section>
 
-        <div class="bar-wrap">
-          <div class="bar-label"><span id="status">Inicializando...</span><span id="pct">0%</span></div>
-          <div class="bar"><div class="fill" id="fill"></div></div>
+  <section class="grid">
+    <article class="card">
+      <div class="card-head">
+        <div class="card-title"><span class="traffic"><i></i><i></i><i></i></span>Registro de verificação</div>
+        <div class="live"><span class="pulse"></span>tempo real</div>
+      </div>
+      <div class="terminal" id="terminal"></div>
+    </article>
+
+    <aside class="card">
+      <div class="card-head">
+        <div class="card-title">Resumo da sessão</div>
+        <div class="live">NEXON / EDGE</div>
+      </div>
+      <div class="side-body">
+        <div class="session-row"><span>Origem</span><strong>Navegador externo</strong></div>
+        <div class="session-row"><span>Ambiente</span><strong>Hostinger VPS</strong></div>
+        <div class="session-row"><span>Domínio</span><strong>teste.nexonlabs.com.br</strong></div>
+        <div class="session-row"><span>Protocolo</span><strong>NXL-TST</strong></div>
+        <div class="session-row"><span>Canal</span><strong>TLS / HTTPS</strong></div>
+        <div class="session-row"><span>Status</span><strong id="sessionStatus">Em análise</strong></div>
+        <div class="badges">
+          <div class="badge"><b></b>SSL ativo</div>
+          <div class="badge"><b></b>Container online</div>
+          <div class="badge"><b></b>Gateway operacional</div>
+          <div class="badge"><b></b>Rota validada</div>
         </div>
       </div>
+    </aside>
+  </section>
 
-      <div class="reveal" id="reveal">
-        <div class="eyebrow">Resultado da verificação</div>
-        <div class="big">😎</div>
-        <h2>Calma. Você caiu no ambiente de testes da Nexon Labs.</h2>
-        <p>Se esta página abriu no seu navegador, o deploy funcionou. Parabéns: você acabou de participar do primeiro teste público do nosso VPS.</p>
-        <div class="badge">✓ Teste concluído com sucesso</div>
-        <div class="footer">Nenhuma senha foi solicitada e nenhum dado pessoal foi coletado por esta página.</div>
-      </div>
-    </section>
-  </main>
+  <section class="progress-card">
+    <div class="progress-top"><span id="progressStatus">Inicializando validação...</span><strong id="pct">0%</strong></div>
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <div class="progress-foot"><span>Motor de validação Nexon Labs</span><span id="stage">Etapa 1/7</span></div>
+  </section>
 
-  <script>
-    const terminal = document.getElementById('terminal');
-    const fill = document.getElementById('fill');
-    const pct = document.getElementById('pct');
-    const status = document.getElementById('status');
-    const scan = document.getElementById('scan');
-    const reveal = document.getElementById('reveal');
+  <div class="footer">Nexon Labs • Ambiente técnico de validação</div>
+</main>
+</div>
 
-    const steps = [
-      {t:'Conectando ao gateway seguro...', p:12, s:'Conectando...'},
-      {t:'Validando origem da requisição...', p:28, s:'Validando acesso...'},
-      {t:'Checando políticas do ambiente...', p:46, s:'Aplicando políticas...'},
-      {t:'Sessão não reconhecida no ambiente de produção.', p:63, s:'Analisando sessão...', c:'warn'},
-      {t:'Acesso externo detectado.', p:78, s:'Revisando permissões...', c:'danger'},
-      {t:'Executando protocolo NEXON-TESTE...', p:92, s:'Quase lá...', c:'warn'},
-      {t:'Pegadinha validada. Nenhum incidente real encontrado.', p:100, s:'Concluído.', c:'ok'}
-    ];
+<div class="reveal-wrap" id="revealWrap">
+  <div class="reveal">
+    <img class="reveal-logo" src="/logo.svg" alt="Nexon Labs">
+    <div class="reveal-label">Validação concluída</div>
+    <h2>Nenhum incidente real detectado.</h2>
+    <p><strong style="color:#fff">Você caiu no ambiente de testes da Nexon Labs 😎</strong><br>Se esta página abriu para você, nosso deploy funcionou com sucesso. Esta experiência foi criada apenas para validar a infraestrutura.</p>
+    <div class="reveal-ok">✓ Deploy validado com sucesso</div>
+    <small>Nenhuma senha foi solicitada e nenhum dado pessoal foi coletado por esta página.</small>
+  </div>
+</div>
 
-    let i = 0;
-    function next(){
-      if(i >= steps.length){
-        setTimeout(()=>{
-          scan.style.display='none';
-          reveal.classList.add('show');
-          document.title='Você caiu 😎 • Nexon Labs';
-        },700);
-        return;
-      }
-      const step = steps[i];
-      const el = document.createElement('div');
-      el.className='line ' + (step.c || '');
-      el.style.animationDelay='0s';
-      el.textContent=step.t;
-      terminal.appendChild(el);
-      terminal.scrollTop=terminal.scrollHeight;
-      fill.style.width=step.p+'%';
-      pct.textContent=step.p+'%';
-      status.textContent=step.s;
-      i++;
-      setTimeout(next, i < 4 ? 700 : 900);
-    }
-    setTimeout(next,500);
-  </script>
+<script>
+const terminal=document.getElementById('terminal');
+const fill=document.getElementById('fill');
+const pct=document.getElementById('pct');
+const progressStatus=document.getElementById('progressStatus');
+const stage=document.getElementById('stage');
+const sessionStatus=document.getElementById('sessionStatus');
+const revealWrap=document.getElementById('revealWrap');
+const clock=document.getElementById('clock');
+
+function updateClock(){
+  const d=new Date();
+  clock.textContent=d.toLocaleTimeString('pt-BR',{hour12:false});
+}
+updateClock(); setInterval(updateClock,1000);
+
+const steps=[
+  {p:12,s:'Inicializando gateway seguro...',m:'Inicializando handshake do ambiente seguro.',c:'info'},
+  {p:28,s:'Validando rota de entrada...',m:'Rota HTTPS reconhecida e encaminhada pelo gateway.',c:'ok'},
+  {p:46,s:'Verificando integridade da sessão...',m:'Integridade do canal confirmada. Sessão em análise.',c:'info'},
+  {p:63,s:'Aplicando políticas do ambiente...',m:'Origem externa identificada para o ambiente de validação.',c:'warn'},
+  {p:78,s:'Revisando permissões...',m:'Sessão não catalogada para acesso operacional.',c:'warn'},
+  {p:92,s:'Executando protocolo NXL-TST...',m:'Protocolo de teste autorizado. Finalizando diagnóstico.',c:'info'},
+  {p:100,s:'Concluindo validação...',m:'Nenhum incidente real encontrado. Ambiente validado com sucesso.',c:'ok'}
+];
+
+let i=0;
+function addLog(step){
+  const row=document.createElement('div');
+  row.className='log-line '+(step.c||'');
+  const now=new Date().toLocaleTimeString('pt-BR',{hour12:false});
+  row.innerHTML='<span class="ts">'+now+'</span><span class="prompt">'+step.m+'</span>';
+  terminal.appendChild(row);
+  terminal.scrollTop=terminal.scrollHeight;
+}
+function next(){
+  if(i>=steps.length){
+    sessionStatus.textContent='Validado';
+    sessionStatus.style.color='#8ee7bd';
+    setTimeout(()=>revealWrap.classList.add('show'),850);
+    document.title='Validação concluída • Nexon Labs';
+    return;
+  }
+  const step=steps[i];
+  addLog(step);
+  fill.style.width=step.p+'%';
+  pct.textContent=step.p+'%';
+  progressStatus.textContent=step.s;
+  stage.textContent='Etapa '+(i+1)+'/7';
+  i++;
+  setTimeout(next,i<4?780:980);
+}
+setTimeout(next,650);
+</script>
 </body>
 </html>
