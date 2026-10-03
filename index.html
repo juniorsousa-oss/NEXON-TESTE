@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nexon Labs • Ambiente de Teste</title>
+  <style>
+    :root{
+      --bg:#050814;
+      --panel:#0b1020;
+      --line:#1b2645;
+      --text:#eaf0ff;
+      --muted:#8fa0c7;
+      --accent:#7c3aed;
+      --accent2:#22d3ee;
+      --danger:#ff4d6d;
+      --ok:#2dd4bf;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:24px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(124,58,237,.18), transparent 34%),
+        radial-gradient(circle at 80% 75%, rgba(34,211,238,.12), transparent 30%),
+        var(--bg);
+      color:var(--text);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    }
+    .shell{
+      width:min(920px,100%);
+      border:1px solid rgba(143,160,199,.22);
+      border-radius:22px;
+      overflow:hidden;
+      background:rgba(8,12,26,.90);
+      box-shadow:0 30px 90px rgba(0,0,0,.45);
+      backdrop-filter:blur(14px);
+    }
+    .top{
+      height:54px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:0 18px;
+      border-bottom:1px solid rgba(143,160,199,.14);
+      background:rgba(255,255,255,.02);
+    }
+    .dot{width:11px;height:11px;border-radius:50%;background:#ff5f57}
+    .dot:nth-child(2){background:#febc2e}
+    .dot:nth-child(3){background:#28c840}
+    .brand{margin-left:auto;color:var(--muted);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+    .content{padding:32px}
+    .eyebrow{color:var(--accent2);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+    h1{font-size:clamp(28px,4vw,46px);line-height:1.04;margin:0 0 14px}
+    .sub{color:var(--muted);font-size:16px;margin-bottom:28px}
+    .terminal{
+      min-height:250px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:20px;
+      background:#050914;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      font-size:14px;
+      line-height:1.7;
+      overflow:hidden;
+    }
+    .line{opacity:0;transform:translateY(5px);animation:show .25s forwards}
+    .line::before{content:"> ";color:var(--accent2)}
+    .warn{color:#ffd166}
+    .danger{color:var(--danger);font-weight:700}
+    .ok{color:var(--ok);font-weight:700}
+    .bar-wrap{margin-top:24px}
+    .bar-label{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-bottom:8px}
+    .bar{height:10px;border-radius:999px;background:#11182a;overflow:hidden;border:1px solid #1a2540}
+    .fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .35s ease}
+    .reveal{
+      display:none;
+      text-align:center;
+      padding:10px 0 2px;
+    }
+    .reveal.show{display:block;animation:pop .45s ease}
+    .reveal .big{font-size:clamp(36px,7vw,72px);margin:8px 0}
+    .reveal h2{font-size:clamp(24px,4vw,38px);margin:4px 0 10px}
+    .reveal p{color:var(--muted);font-size:16px;max-width:620px;margin:0 auto}
+    .badge{
+      display:inline-flex;
+      margin-top:22px;
+      padding:9px 13px;
+      border-radius:999px;
+      border:1px solid rgba(45,212,191,.32);
+      background:rgba(45,212,191,.08);
+      color:#8ff3df;
+      font-size:13px;
+      font-weight:700;
+    }
+    .footer{margin-top:18px;text-align:center;color:#627098;font-size:12px}
+    @keyframes show{to{opacity:1;transform:none}}
+    @keyframes pop{0%{opacity:0;transform:scale(.96)}100%{opacity:1;transform:scale(1)}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="top">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="brand">Nexon Labs • Secure Gateway</span>
+    </div>
+    <section class="content">
+      <div id="scan">
+        <div class="eyebrow">Ambiente de validação</div>
+        <h1>Verificando acesso ao ambiente Nexon Labs...</h1>
+        <div class="sub">Aguarde enquanto o gateway conclui as verificações de sessão.</div>
+
+        <div class="terminal" id="terminal"></div>
+
+        <div class="bar-wrap">
+          <div class="bar-label"><span id="status">Inicializando...</span><span id="pct">0%</span></div>
+          <div class="bar"><div class="fill" id="fill"></div></div>
+        </div>
+      </div>
+
+      <div class="reveal" id="reveal">
+        <div class="eyebrow">Resultado da verificação</div>
+        <div class="big">😎</div>
+        <h2>Calma. Você caiu no ambiente de testes da Nexon Labs.</h2>
+        <p>Se esta página abriu no seu navegador, o deploy funcionou. Parabéns: você acabou de participar do primeiro teste público do nosso VPS.</p>
+        <div class="badge">✓ Teste concluído com sucesso</div>
+        <div class="footer">Nenhuma senha foi solicitada e nenhum dado pessoal foi coletado por esta página.</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const terminal = document.getElementById('terminal');
+    const fill = document.getElementById('fill');
+    const pct = document.getElementById('pct');
+    const status = document.getElementById('status');
+    const scan = document.getElementById('scan');
+    const reveal = document.getElementById('reveal');
+
+    const steps = [
+      {t:'Conectando ao gateway seguro...', p:12, s:'Conectando...'},
+      {t:'Validando origem da requisição...', p:28, s:'Validando acesso...'},
+      {t:'Checando políticas do ambiente...', p:46, s:'Aplicando políticas...'},
+      {t:'Sessão não reconhecida no ambiente de produção.', p:63, s:'Analisando sessão...', c:'warn'},
+      {t:'Acesso externo detectado.', p:78, s:'Revisando permissões...', c:'danger'},
+      {t:'Executando protocolo NEXON-TESTE...', p:92, s:'Quase lá...', c:'warn'},
+      {t:'Pegadinha validada. Nenhum incidente real encontrado.', p:100, s:'Concluído.', c:'ok'}
+    ];
+
+    let i = 0;
+    function next(){
+      if(i >= steps.length){
+        setTimeout(()=>{
+          scan.style.display='none';
+          reveal.classList.add('show');
+          document.title='Você caiu 😎 • Nexon Labs';
+        },700);
+        return;
+      }
+      const step = steps[i];
+      const el = document.createElement('div');
+      el.className='line ' + (step.c || '');
+      el.style.animationDelay='0s';
+      el.textContent=step.t;
+      terminal.appendChild(el);
+      terminal.scrollTop=terminal.scrollHeight;
+      fill.style.width=step.p+'%';
+      pct.textContent=step.p+'%';
+      status.textContent=step.s;
+      i++;
+      setTimeout(next, i < 4 ? 700 : 900);
+    }
+    setTimeout(next,500);
+  </script>
+</body>
+</html>
