@@ -5,6 +5,8 @@ services:
     command: >
       /bin/sh -c "wget -q -O /usr/share/nginx/html/index.html
       https://raw.githubusercontent.com/juniorsousa-oss/NEXON-TESTE/main/index.html
+      && wget -q -O /usr/share/nginx/html/logo.svg
+      https://raw.githubusercontent.com/juniorsousa-oss/NEXON-TESTE/main/logo.svg
       && exec nginx -g 'daemon off;'"
     labels:
       - traefik.enable=true
