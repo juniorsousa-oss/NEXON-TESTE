@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Nexon Labs: núcleo com seis conexões">
+  <g fill="none" stroke="#FFFFFF" stroke-width="5.4" stroke-linecap="round">
+    <path d="M50 50 50 12M50 50 18 26M50 50 83 28M50 50 14 72M50 50 83 76M50 50 50 88"/>
+  </g>
+  <path d="M50 50 18 26M50 50 83 76" stroke="#14B8A6" stroke-width="5.4" stroke-linecap="round"/>
+  <g stroke="none">
+    <circle cx="50" cy="50" r="16" fill="#FFFFFF"/>
+    <circle cx="50" cy="12" r="9" fill="#FFFFFF"/>
+    <circle cx="18" cy="26" r="9" fill="#14B8A6"/>
+    <circle cx="83" cy="28" r="9" fill="#FFFFFF"/>
+    <circle cx="14" cy="72" r="9" fill="#FFFFFF"/>
+    <circle cx="83" cy="76" r="10" fill="#14B8A6"/>
+    <circle cx="50" cy="88" r="9" fill="#FFFFFF"/>
+  </g>
+</svg>
